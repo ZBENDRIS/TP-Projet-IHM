@@ -193,7 +193,7 @@
           <label for="syscompt">Système de comptage :</label>
           <input type="text" placeholder="exemple : gps" class="form-control" id="syscompt">
         </div>
-        <button type="submit" disabled="true" class="btn btn-warning" id="btnAddPark">Ajouter un parking</button>
+        <button type="submit" disabled="true" class="btn btn-warning float-right" id="btnAddPark">Ajouter un parking</button>
       </form>
     </div>
   </div>
@@ -319,11 +319,11 @@ $('#ajouterpark').on('change', function (e) {
   }
 
   if(na && gp && pl && ma && co){
-    document.getElementById('btnAddPark').setAttribute('class', 'btn btn-success');
+    document.getElementById('btnAddPark').setAttribute('class', 'btn btn-success float-right');
     document.getElementById('btnAddPark').disabled = false;
     return true;
   } else {
-    document.getElementById('btnAddPark').setAttribute('class', 'btn btn-warning');
+    document.getElementById('btnAddPark').setAttribute('class', 'btn btn-warning float-right');
     document.getElementById('btnAddPark').disabled = true;
     return false;
   }
@@ -523,5 +523,9 @@ body {
   /*height: 80px; /* Set the fixed height of the footer here */
   line-height: 40px; /* Vertically center the text there */
   background-color: #f5f5f5;
+}
+
+#parktab {
+  text-align: center;
 }
 </style>
