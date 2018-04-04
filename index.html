@@ -40,12 +40,12 @@
       <table class="table" id="parktab">
         <thead>
           <tr>
-            <th>nom</th>
-            <th>type de vehicules</th>
-            <th>coordonnées GPS</th>
-            <th>nombre de places</th>
-            <th>email responsable</th>
-            <th>système de comptage</th>
+            <th>Nom</th>
+            <th>Type de vehicules</th>
+            <th>Coordonnées GPS</th>
+            <th>Nombre de places</th>
+            <th>Email responsable</th>
+            <th>Système de comptage</th>
             <th></th>
           </tr>
         </thead>
@@ -58,9 +58,14 @@
             <td>responsable@univ-lyon1.fr</td>
             <td>gps</td>
             <td>
-              <button href="#" class="btn btn-danger" id="test" data-toggle="modal" data-target="#modalSuppression">
-                Supprimer
-              </button>
+              <div class="btn-group btn-group-sm" role="group">
+                <button href="#" class="btn btn-info" onclick="modifierLigne(this)">
+                  Modifier
+                </button>
+                <button href="#" class="btn btn-danger" id="test" data-toggle="modal" data-target="#modalSuppression">
+                  Supprimer
+                </button>
+              </div>
             </td>
           </tr>
           <tr>
@@ -71,9 +76,14 @@
             <td>responsable@univ-lyon1.fr</td>
             <td>gps</td>
             <td>
-              <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
-                Supprimer
-              </button>
+              <div class="btn-group btn-group-sm" role="group">
+                <button href="#" class="btn btn-info" onclick="modifierLigne(this)">
+                  Modifier
+                </button>
+                <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
+                  Supprimer
+                </button>
+              </div>
             </td>
           </tr>
           <tr>
@@ -84,9 +94,14 @@
             <td>responsable@univ-lyon1.fr</td>
             <td>gps</td>
             <td>
-              <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
-                Supprimer
-              </button>
+              <div class="btn-group btn-group-sm" role="group">
+                <button href="#" class="btn btn-info" onclick="modifierLigne(this)">
+                  Modifier
+                </button>
+                <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
+                  Supprimer
+                </button>
+              </div>
             </td>
           </tr>
           <tr>
@@ -97,9 +112,14 @@
             <td>responsable@univ-lyon1.fr</td>
             <td>gps</td>
             <td>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
-                Supprimer
-              </button>
+              <div class="btn-group btn-group-sm" role="group">
+                <button href="#" class="btn btn-info" onclick="modifierLigne(this)">
+                  Modifier
+                </button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
+                  Supprimer
+                </button>
+              </div>
             </td>
           </tr>
           <tr>
@@ -110,9 +130,14 @@
             <td>responsable@univ-lyon1.fr</td>
             <td>gps</td>
             <td>
-              <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
-                Supprimer
-              </button>
+              <div class="btn-group btn-group-sm" role="group">
+                <button href="#" class="btn btn-info" onclick="modifierLigne(this)">
+                  Modifier
+                </button>
+                <button href="#" class="btn btn-danger" data-toggle="modal" data-target="#modalSuppression">
+                  Supprimer
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -167,6 +192,26 @@
         </div>
         <button type="submit" disabled="true" class="btn btn-warning" id="btnAddPark">Ajouter un parking</button>
       </form>
+    </div>
+  </div>
+  <div class="modal fade" id="modalInsertion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Insertion</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Une ligne a été inserée
+        </div>
+        <div class="modal-footer">
+          <form role="form" id="supprimerLigne">
+            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
   <footer class="footer bg-dark text-white mt-4">
@@ -282,6 +327,47 @@ $('#ajouterpark').on('change', function (e) {
 
 })
 
+function modifierLigne(button) {
+  var ligne = getParentByTagName(button,"tr");
+  var child = ligne.childNodes;
+  for(var i = 0; i < child.length; i++){
+    if(child[i].tagName === "TD" && child[i].innerHTML.indexOf("button") <= -1){
+      var text = child[i].innerHTML;
+      var input = document.createElement("input");
+
+      input.setAttribute("type","text");
+      input.style.display = "";
+      input.setAttribute("class", "form-control input-sm");
+      input.value = text;
+      child[i].innerHTML = "";
+      child[i].appendChild(input);
+
+    }else if(child[i].tagName === "TD" && child[i].innerHTML.indexOf("button") > -1) {
+      child[i].children[0].children[0].setAttribute("onclick","validerLigne(this)");
+      child[i].children[0].children[0].setAttribute("class","btn btn-success");
+      child[i].children[0].children[0].innerHTML = "Valider";
+
+    }
+  }
+}
+
+function validerLigne(button){
+  var ligne = getParentByTagName(button,"tr");
+  var child = ligne.childNodes;
+  for(var i = 0; i < child.length; i++){
+    if(child[i].tagName === "TD" && child[i].innerHTML.indexOf("button") <= -1){
+      var input = child[i].children[0];
+      child[i].innerHTML=input.value;
+    }else if(child[i].tagName === "TD" && child[i].innerHTML.indexOf("button") > -1) {
+      child[i].children[0].children[0].setAttribute("onclick","modifierLigne(this)");
+      child[i].children[0].children[0].setAttribute("class","btn btn-info");
+      child[i].children[0].children[0].innerHTML = "Modifier";
+    }
+  }
+
+
+}
+
 $('#ajouterpark').on('submit', function (e) {
     e.preventDefault();
 
@@ -326,8 +412,19 @@ $('#ajouterpark').on('submit', function (e) {
     park.style.value = "";
 
     document.getElementById('parktab').appendChild(park);
+    document.getElementById("ajouterpark").reset();
+    $("#modalInsertion").modal()
+    document.getElementById('btnAddPark').disabled = true;
+
+
 
 })
+
+$('#Recherche').on('keydown', function (e) {
+    if (e.keyCode == 13) {
+        return false;
+    }
+});
 
 
 </script>
